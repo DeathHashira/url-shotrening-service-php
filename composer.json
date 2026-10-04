@@ -1,0 +1,24 @@
+{
+    "name": "hashira/intermediate-url-shortening-service",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DeathHashira",
+            "email": "shabanid.zahra@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "doctrine/migrations": "^3.9",
+        "vlucas/phpdotenv": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/",
+            "App\\": "app/",
+            "Controllers\\": "controllers/",
+            "Services\\": "services/",
+            "Models\\": "models/"
+        }
+    }
+}
