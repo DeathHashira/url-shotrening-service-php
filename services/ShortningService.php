@@ -46,7 +46,7 @@ class ShortningService
        $res = $this->urlsModel->readByCondition($conditions);
 
        if (!empty($res)) {
-           $this->updateStat($res[0]["id"]);
+           $this->urlsModel->updateStatById($res[0]["id"]);
            return [
                "success" => true,
                "content" => $res[0]
@@ -113,12 +113,6 @@ class ShortningService
                "content" => $res[0]
            ];
        }
-   }
-
-   private function updateStat(int $id): void
-   {
-       $data = ["stats" => "stats + 1"];
-       $this->urlsModel->updateById($id, $data);
    }
 
    private function generateShort(): string

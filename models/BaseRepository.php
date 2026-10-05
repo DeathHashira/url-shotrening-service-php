@@ -17,7 +17,7 @@ class BaseRepository
         $columns = implode(", ", array_keys($data));
         $values = implode(", ", array_map(function($key) {return ":$key";}, array_keys($data)));
 
-        $statement = $this->conn->prepare("INSERT INTO TABLE $this->tableName ($columns) VALUES ($values)");
+        $statement = $this->conn->prepare("INSERT INTO $this->tableName ($columns) VALUES ($values)");
         $this->bindValues($statement, $data);
 
         return $statement->execute();

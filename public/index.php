@@ -28,12 +28,12 @@ $urlController = new UrlController(
 
 Router::post("/shorten", [$urlController, "createNewLink"]);
 
-Router::get("/shorten/{shortCode}", [$urlController, "getUrl"], "/^/shorten/([^/]+)$/");
+Router::get("/shorten/{shortCode}", [$urlController, "getUrl"], "/^\/shorten\/([^\/]+)$/");
 
-Router::patch("/shorten/{shortCode}", [$urlController, "updateShort"], "/^/shorten/([^/]+)$/");
+Router::patch("/shorten/{shortCode}", [$urlController, "updateShort"], "/^\/shorten\/([^\/]+)$/");
 
-Router::delete("/shorten/{shortCode}", [$urlController, "deleteShort"], "/^/shorten/([^/]+)$/");
+Router::delete("/shorten/{shortCode}", [$urlController, "deleteShort"], "/^\/shorten\/([^\/]+)$/");
 
-Router::get("/shorten/{shortCode}/stats", [$urlController, "getStats"], "/^/shorten/([^/]+)/stats$/");
+Router::get("/shorten/{shortCode}/stats", [$urlController, "getStats"], "/^\/shorten\/([^\/]+)\/stats$/");
 
 Router::resolve();

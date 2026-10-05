@@ -27,10 +27,13 @@ class Request
         } else if ($this->method === "post") {
             return $this->body;
         } else {
-            return json_decode(
+            $data = [];
+            parse_str(
             file_get_contents('php://input'),
-            true
+            $data
             );
+
+            return $data;
         }
     }
 }

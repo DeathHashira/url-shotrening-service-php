@@ -17,34 +17,38 @@ class Router
         return parse_url($_SERVER["REQUEST_URI"])["path"];
     }
 
-    private static function add(string $method, string $path, callable $handler, ?string $pattern=null, ?array $params=null): void
+    private static function add(string $method, string $path, callable $handler, ?string $pattern=null): void
     {
         if (empty($pattern)) {
             static::$staticRoutes[$method][$path] = $handler;
         } else {
-            static::$dynamicRoutes[$method][$path]["handler"] = $handler;
-            static::$dynamicRoutes[$method][$path]["pattern"] = $pattern;
+            static::$dynamicRoutes[] = [
+                "path" => $path,
+                "method" => $method,
+                "handler" => $handler,
+                "pattern" => $pattern
+            ];
         }
     }
 
-    public static function post(string $path, callable $handler): void
+    public static function post(string $path, callable $handler, ?string $pattern=null): void
     {
-        static::add("post", $path, $handler);
+        static::add("post", $path, $handler, $pattern);
     }
 
-    public static function get(string $path, callable $handler): void
+    public static function get(string $path, callable $handler, ?string $pattern=null): void
     {
-        static::add("get", $path, $handler);
+        static::add("get", $path, $handler, $pattern);
     }
 
-    public static function patch(string $path, callable $handler): void
+    public static function patch(string $path, callable $handler, ?string $pattern=null): void
     {
-        static::add("patch", $path, $handler);
+        static::add("patch", $path, $handler, $pattern);
     }
 
-    public static function delete(string $path, callable $handler): void
+    public static function delete(string $path, callable $handler, ?string $pattern=null): void
     {
-        static::add("delete", $path, $handler);
+        static::add("delete", $path, $handler, $pattern);
     }
 
     public static function resolve(): void
@@ -57,10 +61,10 @@ class Router
             $handler()->send();
         } else {
             foreach (self::$dynamicRoutes as $route) {
-                if (preg_match($route["pattern"], $path)) {
+                if (preg_match($route["pattern"], $path) && $route["method"] === $method) {
                     $params = self::extractParams($path);
                     $handler = $route["handler"];
-                    $handler($params[0])->send();
+                    $handler($params[1])->send();
                 }
             }
         }
@@ -68,6 +72,7 @@ class Router
 
     private static function extractParams(string $path): array
     {
-        return preg_match("/\{([^/}]+)\}/", $path);
+        preg_match("/^\/shorten\/([^\/]+)/", $path, $matchs);
+        return $matchs;
     }
 }

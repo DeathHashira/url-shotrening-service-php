@@ -20,7 +20,9 @@ class UrlController
 
         if ($result["success"]) {
             return (new Response())
-            ->setStatusCode(201);
+            ->setStatusCode(201)
+            ->setHeader("Content-type", "application/json")
+            ->setContent(["short_code" => $result["short_code"]]);
         } else {
             return (new Response())
             ->setStatusCode(400);
@@ -34,6 +36,7 @@ class UrlController
         if ($result["success"]) {
             return (new Response())
             ->setStatusCode(200)
+            ->setHeader("Content-type", "application/json")
             ->setContent($result["content"]);
         } else {
             return (new Response())
@@ -78,6 +81,7 @@ class UrlController
         if ($result["success"]) {
             return (new Response())
             ->setStatusCode(200)
+            ->setHeader("Content-type", "application/json")
             ->setContent($result["content"]);
         } else {
             return (new Response())

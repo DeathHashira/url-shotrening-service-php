@@ -4,11 +4,14 @@ namespace App\Http;
 
 class Response
 {
-    public function __construct(
-        private int $statusCode,
-        private array $headers,
-        private string $content
-    ) {}
+    private int $statusCode;
+    private array $headers;
+    private string $content;
+    public function __construct() {
+        $this->statusCode = 200;
+        $this->headers = [];
+        $this->content = '';
+    }
 
     public function getStatusCode(): int
     {
@@ -20,7 +23,7 @@ class Response
         return $this->headers;
     }
 
-    public function getContent(): array
+    public function getContent(): ?array
     {
         return json_decode($this->content, true);
     }
@@ -51,6 +54,6 @@ class Response
             header("$name: $value");
         }
 
-        echo $this->getContent();
+        echo $this->content;
     }
 }
